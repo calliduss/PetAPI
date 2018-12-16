@@ -11,7 +11,7 @@ Used technologies and frameworks:
 
 How to run unit tests? You can use a few options below:
 
-#Manual run
+#Manual run  
 right-click on the PetCRUD.java class -> run 'PetCRUD' (or Ctrl + Shift + F10 in Intellij IDEA)
 
 #Run all the unit test classes  
