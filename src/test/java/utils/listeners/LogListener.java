@@ -49,18 +49,13 @@ public class LogListener implements ITestListener {
         return array;
     }
 
-    public void onTestStart(ITestResult iTestResult) {
-    }
+    public void onTestStart(ITestResult iTestResult) {}
 
-    public void onTestSkipped(ITestResult iTestResult) {
-
-    }
+    public void onTestSkipped(ITestResult iTestResult) {}
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
 
     }
 
-    public void onFinish(ITestContext iTestContext) {
-
-    }
+    public void onFinish(ITestContext iTestContext) {}
 }
