@@ -3,7 +3,7 @@
 Used technologies and frameworks:
 - Java
 - Rest Assured
-- JUnit
+- TestNG
 - Allure Framework
 - Jetty
 
@@ -26,7 +26,19 @@ right-click on the PetCRUD.java class -> run 'PetCRUD' (or Ctrl + Shift + F10 in
 
 ## How to see allure report
 
-In order to check the results in the Allure report, run the following maven command  
-```mvn clean test site jetty:run```
+You can generate a report using one of the following command:
 
-Open a browser in http://localhost:8080 so as to see the generated report by Allure
+1) ```mvn allure:serve```
+Report will be generated into temp folder. Web server with results will start automatically and open a browser window.
+
+2) ```mvn allure:report```
+Report will be generated tо directory: target/site/allure-maven/index.html
+
+After executing ```mvn allure:report``` you need to start jetty server with the following command:
+```mvn jetty:run```
+
+Then open a browser in http://localhost:8080 so as to see the generated report by Allure
+
+Allure report example: 
+
+![AllureReport](https://github.com/Usertiron/VaadinWebApplication/blob/master/allure_example/AllureReport.gif)
