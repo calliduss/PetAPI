@@ -33,10 +33,12 @@ Report will be generated into temp folder. Web server with results will start au
 
 2) ```mvn allure:report```
 Report will be generated tо directory: target/site/allure-maven/index.html
+
 After executing ```mvn allure:report``` you need to start jetty server with the following command:
 ```mvn jetty:run```
 
 Then open a browser in http://localhost:8080 so as to see the generated report by Allure
 
 Allure report example: 
+
 ![AllureReport](https://github.com/Usertiron/VaadinWebApplication/blob/master/allure_example/AllureReport.gif)
