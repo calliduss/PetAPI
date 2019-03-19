@@ -1,45 +1,40 @@
 package rest.test;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.config.RestAssuredConfig;
-import com.jayway.restassured.response.Response;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
-
+import io.qameta.allure.Description;
+import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.response.Response;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import utils.listeners.LogListener;
 import java.util.*;
-
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
-import static com.jayway.restassured.config.EncoderConfig.encoderConfig;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static io.restassured.config.EncoderConfig.encoderConfig;
 import static org.hamcrest.Matchers.equalTo;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Listeners({ LogListener.class })
 public class PetCRUD {
 
     private final String baseURI = "https://petstore.swagger.io";
     private final String CONTEXT_PATH = "/v2/pet";
 
-    @Before
+    @BeforeClass
     public void setUp() {
         RestAssured.config = new RestAssuredConfig().encoderConfig(encoderConfig().defaultContentCharset("UTF-8"));
         RestAssured.baseURI = baseURI;
     }
 
-    @Attachment
-    @Step
+    @Description("The test checks if remote swagger is available")
     @Test
-    public void testA_isSwaggerUp() {
+    public void isSwaggerUp() {
         given().when().get(baseURI).then().statusCode(200);
     }
 
-    @Attachment
-    @Step
-    @Test
-    public void testB_addNewPet() throws Exception {
+    @Description("The test creates new pet using POST method")
+    @Test(dependsOnMethods = {"isSwaggerUp"})
+    public void addNewPet() throws Exception {
 
         List<Map<String, Object>> tags = new ArrayList<>();
 
@@ -76,24 +71,21 @@ public class PetCRUD {
                 .body("id", equalTo(666))
                 .body("name", equalTo("Cerberus"))
                 .statusCode(200)
-
                 .extract().response();
     }
 
-    @Attachment
-    @Step
-    @Test
-    public void testC_getPetById() throws Exception {
+    @Description("The test gets an ID of the newly created pet by using GET method")
+    @Test(dependsOnMethods = {"addNewPet"})
+    public void getPetById() throws Exception {
         given().log().all()
                 .when().get(CONTEXT_PATH + "/666")
                 .then().statusCode(200)
                 .assertThat().body("name", equalTo("Cerberus"));
     }
 
-    @Attachment
-    @Step
-    @Test
-    public void testD_updatePet() throws Exception {
+    @Description("The test updates some info of the newly created pet by using PUT method")
+    @Test(dependsOnMethods = {"getPetById"})
+    public void updatePet() throws Exception {
 
         List<Map<String, Object>> tags = new ArrayList<>();
 
@@ -133,10 +125,9 @@ public class PetCRUD {
                 .extract().response();
     }
 
-    @Attachment
-    @Step
-    @Test
-    public void testE_deletePet() throws Exception {
+    @Description("The test deletes the newly created pet by using DELETE method")
+    @Test(dependsOnMethods = {"updatePet"})
+    public void deletePet() throws Exception {
         when()
                 .delete(CONTEXT_PATH + "/777")
                 .then()

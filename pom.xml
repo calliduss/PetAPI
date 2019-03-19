@@ -8,11 +8,17 @@
     <artifactId>com.testtask</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <properties>
-        <aspectj.version>1.7.4</aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <allure.version>1.5.4</allure.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
+        <aspectj.version>1.9.3.RC1</aspectj.version>
+        <jetty.maven.plugin.version>9.3.9.v20160517</jetty.maven.plugin.version>
+        <allure.maven.version>2.10.0</allure.maven.version>
+        <rest.assured.version>3.3.0</rest.assured.version>
+        <allure.rest.assured.version>2.10.0</allure.rest.assured.version>
+        <allure.testng.version>2.10.0</allure.testng.version>
+        <testng.version>6.14.3</testng.version>
     </properties>
 
     <build>
@@ -21,27 +27,23 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
+                    <version>${maven.compiler.plugin.version}</version>
                     <configuration>
-                        <source>1.9</source>
-                        <target>1.9</target>
+                        <source>1.8</source>
+                        <target>1.8</target>
                     </configuration>
                 </plugin>
+
+                <!--Running tests-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.21.0</version>
+                    <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <testFailureIgnore>false</testFailureIgnore>
                         <argLine>
-                             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         </argLine>
-                        <properties>
-                            <property>
-                                <name>listener</name>
-                                <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
-                            </property>
-                        </properties>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -51,10 +53,12 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+
+                <!--Server to view the report-->
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.3.9.v20160517</version>
+                    <version>${jetty.maven.plugin.version}</version>
                     <configuration>
                         <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
                         <stopKey>stop</stopKey>
@@ -64,53 +68,55 @@
                 <plugin>
                     <groupId>io.qameta.allure</groupId>
                     <artifactId>allure-maven</artifactId>
-                    <version>2.9</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>${allure.maven.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
     <dependencies>
+        <!--Rest Assured section-->
         <dependency>
-            <groupId>com.jayway.restassured</groupId>
+            <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>2.9.0</version>
+            <version>${rest.assured.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
+            <groupId>io.rest-assured</groupId>
             <artifactId>json-path</artifactId>
-            <version>2.2.0</version>
+            <version>${rest.assured.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.jayway.restassured</groupId>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>xml-path</artifactId>
+            <version>${rest.assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
+            <version>${rest.assured.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-rest-assured</artifactId>
-            <version>2.8.1</version>
+            <artifactId>allure-rest-assured</artifactId> <!--generates attachment for allure-->
+            <version>${allure.rest.assured.version}</version>
         </dependency>
+
+        <!--Allure TestNG Dependency-->
         <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-junit-adaptor</artifactId>
-            <version>1.5.4</version>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.testng.version}</version>
+        </dependency>
+
+        <!--TestNG-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Java 6 = JAX-B Version 2.0   -->
@@ -131,28 +137,5 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.11</version>
         </dependency>
-
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
-    <reporting>
-        <excludeDefaults>true</excludeDefaults>
-        <plugins>
-            <plugin>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-maven-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
-        </plugins>
-    </reporting>
-
 </project>
