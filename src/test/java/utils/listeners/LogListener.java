@@ -53,9 +53,7 @@ public class LogListener implements ITestListener {
 
     public void onTestSkipped(ITestResult iTestResult) {}
 
-    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-
-    }
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {}
 
     public void onFinish(ITestContext iTestContext) {}
 }
