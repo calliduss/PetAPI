@@ -41,4 +41,4 @@ Then open a browser in http://localhost:8080 so as to see the generated report b
 
 Allure report example: 
 
-![AllureReport](https://github.com/Usertiron/VaadinWebApplication/blob/master/allure_example/AllureReport.gif)
+![AllureReport](https://github.com/Usertiron/PetAPI/blob/master/allure_example/AllureReport.gif)
