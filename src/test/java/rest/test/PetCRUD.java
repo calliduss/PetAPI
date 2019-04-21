@@ -3,18 +3,21 @@ package rest.test;
 import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.listeners.LogListener;
+
 import java.util.*;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.config.EncoderConfig.encoderConfig;
 import static org.hamcrest.Matchers.equalTo;
 
-@Listeners({ LogListener.class })
+@Listeners({LogListener.class})
 public class PetCRUD {
 
     private final String baseURI = "https://petstore.swagger.io";
@@ -38,7 +41,7 @@ public class PetCRUD {
 
         List<Map<String, Object>> tags = new ArrayList<>();
 
-        Map<String, Object>  petTags = new HashMap<>();
+        Map<String, Object> petTags = new HashMap<>();
         petTags.put("id", 1);
         petTags.put("name", "tag_1");
 
@@ -47,11 +50,11 @@ public class PetCRUD {
         HashSet photoUrls = new HashSet();
         photoUrls.add("picture");
 
-        Map<String, Object>  category = new HashMap<>();
+        Map<String, Object> category = new HashMap<>();
         category.put("id", 1);
         category.put("name", "Dog");
 
-        Map<String, Object>  inputPayload = new HashMap<>();
+        Map<String, Object> inputPayload = new HashMap<>();
         inputPayload.put("id", 666);
         inputPayload.put("name", "Cerberus");
         inputPayload.put("status", "available");
@@ -60,14 +63,14 @@ public class PetCRUD {
         inputPayload.put("photoUrls", photoUrls);
 
         Response response = given().log().all()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .body(inputPayload)
                 .when().post(CONTEXT_PATH);
 
         System.out.print(response.asString());
         response.then()
-                .contentType("application/json")
+                .contentType(ContentType.JSON)
                 .body("id", equalTo(666))
                 .body("name", equalTo("Cerberus"))
                 .statusCode(200)
@@ -89,7 +92,7 @@ public class PetCRUD {
 
         List<Map<String, Object>> tags = new ArrayList<>();
 
-        Map<String, Object>  petTags = new HashMap<>();
+        Map<String, Object> petTags = new HashMap<>();
         petTags.put("id", 1);
         petTags.put("name", "tag_1");
 
@@ -98,11 +101,11 @@ public class PetCRUD {
         HashSet photoUrls = new HashSet();
         photoUrls.add("picture");
 
-        Map<String, Object>  category = new HashMap<>();
+        Map<String, Object> category = new HashMap<>();
         category.put("id", 1);
         category.put("name", "Dog");
 
-        Map<String, Object>  inputPayload = new HashMap<>();
+        Map<String, Object> inputPayload = new HashMap<>();
         inputPayload.put("id", 777); //updated value
         inputPayload.put("name", "Cerberus");
         inputPayload.put("status", "sold"); //updated value
@@ -111,8 +114,8 @@ public class PetCRUD {
         inputPayload.put("photoUrls", photoUrls);
 
         Response response = given().log().all()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .body(inputPayload)
                 .when().put(CONTEXT_PATH);
 
@@ -121,7 +124,7 @@ public class PetCRUD {
                 .body("id", equalTo(777))
                 .body("status", equalTo("sold"))
                 .statusCode(200)
-                .contentType("application/json")
+                .contentType(ContentType.JSON)
                 .extract().response();
     }
 
@@ -132,7 +135,7 @@ public class PetCRUD {
                 .delete(CONTEXT_PATH + "/777")
                 .then()
                 .statusCode(200)
-                .contentType("application/json")
+                .contentType(ContentType.JSON)
                 .extract().response();
     }
 }
