@@ -1,7 +1,6 @@
 package rest.test;
 
 import io.qameta.allure.Description;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -52,8 +51,7 @@ public class PetCRUD extends TestBase {
         inputPayload.put("photoUrls", photoUrls);
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
+                .spec(requestSpec)
                 .body(inputPayload)
                 .when().post(CONTEXT_PATH);
 
@@ -102,8 +100,7 @@ public class PetCRUD extends TestBase {
         inputPayload.put("photoUrls", photoUrls);
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
+                .spec(requestSpec)
                 .body(inputPayload)
                 .when().put(CONTEXT_PATH);
 
