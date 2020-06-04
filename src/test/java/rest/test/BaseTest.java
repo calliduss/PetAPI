@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
 
-public class TestBase {
+public class BaseTest {
 
     static ResponseSpecification responseSpec;
     static RequestSpecification requestSpec;

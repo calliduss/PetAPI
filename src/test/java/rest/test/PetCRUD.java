@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 
 @Listeners({LogListener.class})
-public class PetCRUD extends TestBase {
+public class PetCRUD extends BaseTest {
 
     private final String CONTEXT_PATH = "/v2/pet";
 
