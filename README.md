@@ -1,5 +1,8 @@
 # Swagger PetAPI
 
+This git repository is for a simple test automation framework for testing of RESTful APIs described by following
+specification: https://petstore.swagger.io/#/
+
 Used technologies and frameworks:
 - Java
 - Rest Assured
@@ -7,24 +10,24 @@ Used technologies and frameworks:
 - Allure Framework
 - Jetty
 
-## Getting Started
+# Getting Started
 
 How to run unit tests? You can use a few options below:
 
-#Manual run  
+##Manual run  
 right-click on the PetCRUD.java class -> run 'PetCRUD' (or Ctrl + Shift + F10 in Intellij IDEA)
 
-#Run all the unit test classes  
+####Run all the unit test classes  
 ```mvn clean test```
 
-#Run a single test class  
+####Run a single test class  
 ```mvn test -Dtest=PetCRUD```
 
-#Run a single test method from a test class  
+####Run a single test method from a test class  
 ```mvn -Dtest=PetCRUD#testA_isSwaggerUp test```
 
 
-## How to see allure report
+# How to see allure report
 
 You can generate a report using one of the following command:
 
