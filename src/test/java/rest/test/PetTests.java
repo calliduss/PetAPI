@@ -37,7 +37,7 @@ public class PetTests extends BaseTest {
         assertThat(response.getId(), equalTo(pet.getId()));
     }
 
-    @Description("Find pet by ID")
+    @Description("Find pet by status")
     @Test
     public void findPetsByStatus() {
         List<Pet> response = petController.findPetsByStatus();
